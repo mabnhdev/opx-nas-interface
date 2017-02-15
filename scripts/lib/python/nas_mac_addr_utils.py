@@ -13,6 +13,7 @@
 # See the Apache Version 2.0 License for specific language governing
 # permissions and limitations under the License.
 
+import os
 import nas_os_if_utils as nas_if
 import xml.etree.ElementTree as ET
 import copy
@@ -22,7 +23,7 @@ if_mac_info_cache = {}
 def get_mac_addr_base_range(if_type):
     if len(if_mac_info_cache) == 0:
         try:
-            cfg = ET.parse('/etc/opx/mac_address_alloc.xml')
+            cfg = ET.parse('%s/etc/opx/mac_address_alloc.xml' % os.environ.get("OPX_INSTALL_PATH",""))
         except IOError:
             nas_if.log_err('No mac address config file')
             return None

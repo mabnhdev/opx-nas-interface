@@ -21,7 +21,7 @@ import subprocess
 import cps
 import nas_os_if_utils as nas_if
 
-fanout_config_file = "/etc/opx/dn_nas_fanout_init_config.xml"
+fanout_config_file = "%s/etc/opx/dn_nas_fanout_init_config.xml" % os.environ.get("OPX_INSTALL_PATH","")
 
 def parse_intf_config(intf_list):
     """parse the fanout config from xml and
@@ -33,8 +33,8 @@ def parse_intf_config(intf_list):
             interface = i.attributes["name"].value
             is_fanout = i.attributes["fanout"].value
             if is_fanout == "true":
-                subprocess.call(["/usr/bin/python",
-                                 "/usr/bin/opx-config-fanout",interface,"true"])
+                subprocess.call(["%s/usr/bin/python" % os.environ.get("OPX_INSTALL_PATH",""),
+                                 "%s/usr/bin/opx-config-fanout" % os.environ.get("OPX_INSTALL_PATH",""),interface,"true"])
     except Exception as ex:
         nas_if.log_err(str(ex))
 

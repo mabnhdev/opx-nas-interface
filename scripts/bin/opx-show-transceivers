@@ -13,6 +13,7 @@
 # See the Apache Version 2.0 License for specific language governing
 # permissions and limitations under the License.
 
+import os
 import sys
 import cps_utils
 import nas_front_panel_map as fp
@@ -90,7 +91,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     opt = sys.argv[1]
-    f = '/etc/opx/base_port_physical_mapping_table.xml'
+    f = '%s/etc/opx/base_port_physical_mapping_table.xml' % os.environ.get("OPX_INSTALL_PATH","")
     fp.init(f)
     if opt == 'summary':
         display_media_inventory()

@@ -56,12 +56,12 @@ def main(argv):
 
     if_name_list = str.split(if_name)
     for name in if_name_list:
-        del_cmd_str = '/usr/bin/nas_delete_interface.py ' + name
-        set_cmd_str = ' /usr/bin/opx-config-fanout' + name + ' true'
+        del_cmd_str = '%s/usr/bin/nas_delete_interface.py ' % os.environ.get("OPX_INSTALL_PATH","") + name
+        set_cmd_str = ' %s/usr/bin/opx-config-fanout ' % os.environ.get("OPX_INSTALL_PATH","") + name + ' true'
         os.system(del_cmd_str)
         os.system(set_cmd_str)
 
-    create_cmd_str = '/usr/bin/base_nas_create_interface.py'
+    create_cmd_str = '%s/usr/bin/base_nas_create_interface.py' % os.environ.get("OPX_INSTALL_PATH","")
     os.system(create_cmd_str)
 
 # Calling the main method

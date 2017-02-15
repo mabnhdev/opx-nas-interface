@@ -13,6 +13,7 @@
 # See the Apache Version 2.0 License for specific language governing
 # permissions and limitations under the License.
 
+import os
 import cps
 import cps_object
 import cps_utils
@@ -816,7 +817,7 @@ if __name__ == '__main__':
         #wait for chassis object to be ready
         nas_if.log_err('Create Interface: Base MAC address is not yet ready')
         time.sleep(1)
-    fp.init('/etc/opx/base_port_physical_mapping_table.xml')
+    fp.init('%s/etc/opx/base_port_physical_mapping_table.xml' % os.environ.get("OPX_INSTALL_PATH",""))
 
     handle = cps.obj_init()
 

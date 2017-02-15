@@ -14,6 +14,7 @@
 # permissions and limitations under the License.
 
 
+import os
 import cps
 import cps_object
 import cps_utils
@@ -131,7 +132,7 @@ def get_cb(methods, params):
     return True
 
 if __name__ == '__main__':
-    init('/etc/opx/phy_media_default_npu_setting.xml')
+    init('%s/etc/opx/phy_media_default_npu_setting.xml' % os.environ.get("OPX_INSTALL_PATH",""))
 
     handle = cps.obj_init()
 
