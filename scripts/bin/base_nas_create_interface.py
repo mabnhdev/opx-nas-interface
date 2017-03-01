@@ -31,6 +31,13 @@ def create_interface(obj):
 
     ifobj = nas_if.make_interface_from_phy_port(obj)
 
+    #
+    # Extreme change - handle the case where the interface could not be created
+    # due to lack of a hardware port. In this case simply return.
+    #
+    if ifobj == None:
+        return
+
     if if_cache.exists(ifobj.get_attr_data('if/interfaces/interface/name')):
         nas_if.log_err("Already exists.... " + str(ifobj.get_attr_data('if/interfaces/interface/name')))
         return

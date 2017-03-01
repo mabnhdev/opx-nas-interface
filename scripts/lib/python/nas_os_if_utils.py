@@ -289,7 +289,13 @@ def make_interface_from_phy_port(obj):
     if len(l) == 0:
         log_err("Invalid port specified... ")
         log_err(str(elem.get()))
-        raise Exception("Invalid port - no matching hardware-port")
+        # Extreme change - Because there may not be a
+        # hardware port/front-panel port for all physical ports in the
+        # switch chip return nothing if there is no corresponding hardware
+        # port. This is the case with the CAVIUM SAI. Formerly an
+        # exception was raised.
+        # raise Exception("Invalid port - no matching hardware-port")
+        return None
 
     elem = cps_object.CPSObject(obj=l[0])
 
