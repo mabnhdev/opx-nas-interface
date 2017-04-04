@@ -1,6 +1,30 @@
 [Unit]
 Description=This service is to create all interface during system initiation
+
+# This service (opx-create-interface) accesses CPS objects that are created
+# by the 'opx-front-panel-ports' service e.g. base-if-phy/front-panel-port.
+# Consequently when this service is started the 'opx-front-panel-ports'
+# service must also be started. The 'After' clause by itself is not enough
+# because it does NOT imply a dependency, only that IF both services are being
+# started then this service will be started after the 'opx-front-panel-ports'
+# service. This works fine at system startup but not during the postinst phase
+# of package installation. In this case the
+# '/var/lib/dpkg/info/opx-nas-interface.postinst' file created by
+# dh_systemd_start names 'opx-create-interface.service' before
+# 'opx-front-panel-ports.service' on the 'deb-systemd-invoke start ...'
+# command.
+#
+# Because prior to this fix there was no "Requires" clause below the
+# 'opx-front-panel-ports' service was not started until after this service
+# timed out and failed. The addition of the 'Requires' clause below causes
+# the 'opx-front-panel-ports' service to be started as a requirement of
+# starting this service. The 'After' clause is still useful (albeit not
+# strictly necessary) because it causes the 'opx-front-panel-ports' service
+# to be started before this service at system startup time when both sercices
+# are marked for startup by systemd.
+Requires=opx-front-panel-ports.service
 After=opx-front-panel-ports.service
+
 DefaultDependencies=no
 
 [Service]
